@@ -1,6 +1,7 @@
-package org.example.dao;
+package org.example.dao.dao;
 
 import org.example.connection.DbConnection;
+import org.example.dao.CatDao;
 import org.example.dao.impl.CatDaoImpl;
 import org.example.dao.util.CatTestData;
 import org.example.model.entity.Cat;
@@ -108,13 +109,13 @@ public class CatDaoTest {
     }
 
     @Test
-    public void saveShouldThrowIllegalArgumentExceptionWhenExpectedProductNull() {
+    public void saveShouldThrowIllegalArgumentExceptionWhenExpectedCatNull() {
         assertThatThrownBy(() -> catDao.create(null))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    void updateShouldReturnSuccessfullyUpdatesProductInDatabase() {
+    void updateShouldReturnSuccessfullyUpdatesCatInDatabase() {
         Cat expected = databasePrepared();
         Cat update = CatTestData.builder().withId(expected.getId()).build().buildUpdateCat();
         Cat actual = catDao.update(update);
@@ -124,7 +125,7 @@ public class CatDaoTest {
     }
 
     @Test
-    public void updateShouldThrowIllegalArgumentExceptionWhenExpectedProductNull() {
+    public void updateShouldThrowIllegalArgumentExceptionWhenExpectedCatNull() {
         assertThatThrownBy(() -> catDao.update(null))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -142,8 +143,8 @@ public class CatDaoTest {
     }
 
     private void databaseClear() {
-        for (Cat product : catDao.getAll()) {
-            catDao.delete(product.getId());
+        for (Cat cat : catDao.getAll()) {
+            catDao.delete(cat.getId());
         }
     }
 }

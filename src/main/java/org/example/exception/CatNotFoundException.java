@@ -1,7 +1,5 @@
 package org.example.exception;
 
-import java.util.UUID;
-
 public class CatNotFoundException extends RuntimeException {
 
     public CatNotFoundException(Long id) {
