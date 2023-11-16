@@ -36,8 +36,8 @@ public class CatServiceImpl implements CatService {
     }
 
     @Override
-    public CatDto update(CatDto catDto) {
-        var cat = catDao.getById(catDto.getId()).orElseThrow(EntityNotFoundException::new);
+    public CatDto update(Long id, CatDto catDto) {
+        var cat = catDao.getById(id).orElseThrow(EntityNotFoundException::new);
         catConverter.merge(cat, catDto);
         return catConverter.convert(catDao.update(cat));
     }

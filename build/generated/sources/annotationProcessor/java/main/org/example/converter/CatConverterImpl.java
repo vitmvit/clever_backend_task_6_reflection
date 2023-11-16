@@ -6,7 +6,7 @@ import org.example.model.entity.Cat;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-15T23:51:46+0300",
+    date = "2023-11-16T19:26:36+0300",
     comments = "version: 1.4.1.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.9 (GraalVM Community)"
 )
 public class CatConverterImpl implements CatConverter {
@@ -19,12 +19,6 @@ public class CatConverterImpl implements CatConverter {
 
         CatDto catDto = new CatDto();
 
-        catDto.setId( source.getId() );
-        catDto.setName( source.getName() );
-        catDto.setBreed( source.getBreed() );
-        catDto.setColor( source.getColor() );
-        catDto.setAge( source.getAge() );
-
         return catDto;
     }
 
@@ -36,12 +30,6 @@ public class CatConverterImpl implements CatConverter {
 
         Cat cat = new Cat();
 
-        cat.setId( source.getId() );
-        cat.setName( source.getName() );
-        cat.setBreed( source.getBreed() );
-        cat.setColor( source.getColor() );
-        cat.setAge( source.getAge() );
-
         return cat;
     }
 
@@ -50,12 +38,6 @@ public class CatConverterImpl implements CatConverter {
         if ( catDto == null ) {
             return null;
         }
-
-        cat.setId( catDto.getId() );
-        cat.setName( catDto.getName() );
-        cat.setBreed( catDto.getBreed() );
-        cat.setColor( catDto.getColor() );
-        cat.setAge( catDto.getAge() );
 
         return cat;
     }

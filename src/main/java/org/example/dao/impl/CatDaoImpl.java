@@ -53,8 +53,11 @@ public class CatDaoImpl implements CatDao {
 
     @Override
     public Cat create(Cat cat) {
+        if (cat == null) {
+            throw new IllegalArgumentException("Cat is null");
+        }
         if (connection.isPresent()) {
-            String sql = "INSERT INTO cat (name, breed, color, age) VALUES (?,?,?)";
+            String sql = "INSERT INTO cat (name, breed, color, age) VALUES (?,?,?,?)";
             try (PreparedStatement ps = connection.get().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setString(1, cat.getName());
                 ps.setString(2, cat.getBreed());
@@ -74,6 +77,9 @@ public class CatDaoImpl implements CatDao {
 
     @Override
     public Cat update(Cat cat) {
+        if (cat == null) {
+            throw new IllegalArgumentException("Cat is null");
+        }
         if (connection.isPresent()) {
             String sql = "UPDATE cat SET name = ?, breed = ?, color = ?, age = ? WHERE id = ?";
             Optional<Cat> exists = getById(cat.getId());
