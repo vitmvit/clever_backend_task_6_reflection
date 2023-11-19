@@ -2,7 +2,9 @@ package org.example.dao.util;
 
 import lombok.Builder;
 import lombok.Data;
+import org.example.model.dto.CatCreateDto;
 import org.example.model.dto.CatDto;
+import org.example.model.dto.CatUpdateDto;
 import org.example.model.entity.Cat;
 
 import static org.example.dao.constant.Constant.*;
@@ -29,11 +31,24 @@ public class CatTestData {
         return new Cat(id, name, breed, color, age);
     }
 
-    public Cat buildUpdateCat() {
+    public Cat buildCatUpdated() {
         return new Cat(id, name, breed + " new", color + "new", age);
     }
 
     public CatDto buildCatDto() {
-        return new CatDto(name, breed, color, age);
+        return new CatDto(id, name, breed, color, age);
+    }
+
+    public CatCreateDto buildCatCreateDto() {
+        return new CatCreateDto(name, breed, color, age);
+    }
+
+    public CatUpdateDto buildCatUpdateDto() {
+        var dto = new CatUpdateDto(id);
+        dto.setName(name);
+        dto.setColor(color);
+        dto.setBreed(breed);
+        dto.setAge(age);
+        return dto;
     }
 }

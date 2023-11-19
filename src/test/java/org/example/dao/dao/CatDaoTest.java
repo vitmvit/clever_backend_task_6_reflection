@@ -117,7 +117,7 @@ public class CatDaoTest {
     @Test
     void updateShouldReturnSuccessfullyUpdatesCatInDatabase() {
         Cat expected = databasePrepared();
-        Cat update = CatTestData.builder().withId(expected.getId()).build().buildUpdateCat();
+        Cat update = CatTestData.builder().withId(expected.getId()).build().buildCatUpdated();
         Cat actual = catDao.update(update);
         assertNotNull(actual);
         assertThat(actual.getId()).isEqualTo(update.getId());

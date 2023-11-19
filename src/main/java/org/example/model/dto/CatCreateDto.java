@@ -1,19 +1,17 @@
 package org.example.model.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.FieldNameConstants;
+import lombok.Setter;
 import org.example.validate.MinLength;
 import org.example.validate.NotNegative;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@FieldNameConstants
-public class CatDto {
-
-    private Long id;
+public class CatCreateDto {
 
     @MinLength
     private String name;

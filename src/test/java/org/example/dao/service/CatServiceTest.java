@@ -4,7 +4,9 @@ import org.example.converter.CatConverter;
 import org.example.dao.CatDao;
 import org.example.dao.util.CatTestData;
 import org.example.exception.EntityNotFoundException;
+import org.example.model.dto.CatCreateDto;
 import org.example.model.dto.CatDto;
+import org.example.model.dto.CatUpdateDto;
 import org.example.model.entity.Cat;
 import org.example.service.impl.CatServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -48,6 +50,7 @@ public class CatServiceTest {
         when(catConverter.convert(expected)).thenReturn(catDto);
         CatDto actual = catService.getById(id);
         assertThat(actual)
+                .hasFieldOrPropertyWithValue(Cat.Fields.id, expected.getId())
                 .hasFieldOrPropertyWithValue(Cat.Fields.name, expected.getName())
                 .hasFieldOrPropertyWithValue(Cat.Fields.breed, expected.getBreed())
                 .hasFieldOrPropertyWithValue(Cat.Fields.color, expected.getColor())
@@ -81,10 +84,10 @@ public class CatServiceTest {
     void createShouldInvokeRepositoryWithoutCatId() {
         Cat catToSave = CatTestData.builder().withId(null).build().buildCat();
         Cat expected = CatTestData.builder().build().buildCat();
-        CatDto catDto = CatTestData.builder().withId(null).build().buildCatDto();
+        CatCreateDto dto = CatTestData.builder().build().buildCatCreateDto();
         doReturn(expected).when(catDao).create(catToSave);
-        when(catConverter.convert(catDto)).thenReturn(catToSave);
-        catService.create(catDto);
+        when(catConverter.convert(dto)).thenReturn(catToSave);
+        catService.create(dto);
         verify(catDao).create(catArgumentCaptor.capture());
         assertThat(catArgumentCaptor.getValue()).hasFieldOrPropertyWithValue(Cat.Fields.id, null);
     }
@@ -92,21 +95,21 @@ public class CatServiceTest {
     @Test
     void updateShouldThrowCatNotFoundExceptionWhenCatNotFound() {
         Long id = CatTestData.builder().build().getId();
-        CatDto catDto = CatTestData.builder().build().buildCatDto();
+        CatUpdateDto dto = CatTestData.builder().build().buildCatUpdateDto();
         when(catDao.getById(id)).thenReturn(Optional.empty());
-        assertThrows(EntityNotFoundException.class, () -> catService.update(id, catDto));
+        assertThrows(EntityNotFoundException.class, () -> catService.update(dto));
         verify(catDao, times(1)).getById(id);
     }
 
     @Test
     void updateShouldCallsMergeAndSaveWhenCatFound() {
         Long id = CatTestData.builder().build().getId();
-        CatDto catDto = CatTestData.builder().build().buildCatDto();
+        CatUpdateDto dto = CatTestData.builder().build().buildCatUpdateDto();
         Cat cat = new Cat();
         when(catDao.getById(id)).thenReturn(Optional.of(cat));
-        catService.update(id, catDto);
+        catService.update(dto);
         verify(catDao, times(1)).getById(id);
-        verify(catConverter, times(1)).merge(catArgumentCaptor.capture(), eq(catDto));
+        verify(catConverter, times(1)).merge(catArgumentCaptor.capture(), eq(dto));
         assertSame(cat, catArgumentCaptor.getValue());
         verify(catDao, times(1)).update(cat);
     }

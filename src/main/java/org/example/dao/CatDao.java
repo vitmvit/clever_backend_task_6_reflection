@@ -8,8 +8,12 @@ import java.util.Optional;
 public interface CatDao {
 
     Optional<Cat> getById(Long id);
+
     List<Cat> getAll();
+
     Cat create(Cat cat);
+
     Cat update(Cat cat);
+
     void delete(Long id);
 }

@@ -3,30 +3,30 @@ package org.example.config;
 import org.example.exception.ResourceNotFoundException;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import static org.example.constant.Constant.SOLUTION_CONFIG;
+
 public class ConfigReader {
-    public static final String SOLUTION_CONFIG = "application.yaml";
 
     public Map<String, String> getConfigMap() {
-        Properties properties = null;
         try {
-            properties = loadProperties(SOLUTION_CONFIG);
+            var properties = loadProperties();
+            Map<String, String> configMap = new HashMap<>(properties.size());
+            for (Map.Entry<Object, Object> item : properties.entrySet()) {
+                configMap.put((String) item.getKey(), (String) item.getValue());
+            }
+            return configMap;
         } catch (IOException e) {
             throw new ResourceNotFoundException(e);
         }
-        return Map.of(
-                "driver", (String) properties.get("driver"),
-                "url", (String) properties.get("url"),
-                "username", (String) properties.get("username"),
-                "password", (String) properties.get("password")
-        );
     }
 
-    private Properties loadProperties(String propertyFile) throws IOException {
+    private Properties loadProperties() throws IOException {
         var properties = new Properties();
-        var inputStream = ConfigReader.class.getClassLoader().getResourceAsStream(propertyFile);
+        var inputStream = ConfigReader.class.getClassLoader().getResourceAsStream(SOLUTION_CONFIG);
         properties.load(inputStream);
         inputStream.close();
         return properties;

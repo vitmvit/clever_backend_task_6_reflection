@@ -4,9 +4,9 @@ public interface Cache<K, V> {
 
     V get(K key);
 
-    void put(K key, V value);
+    V put(K key, V value);
 
-    void remove(K key);
+    V remove(K key);
 
     void clear();
 }

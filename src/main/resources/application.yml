@@ -3,3 +3,6 @@ datasource:
   url: jdbc:postgresql://localhost:5432/clever_lab_task_6
   username: root
   password: root
+cache:
+  algorithm: lru
+  capacity: 10
