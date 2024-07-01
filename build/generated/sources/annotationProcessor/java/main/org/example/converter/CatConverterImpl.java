@@ -5,10 +5,11 @@ import org.example.model.dto.CatCreateDto;
 import org.example.model.dto.CatDto;
 import org.example.model.dto.CatUpdateDto;
 import org.example.model.entity.Cat;
+import org.example.model.entity.Cat.CatBuilder;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-19T22:26:30+0300",
+    date = "2023-11-30T23:53:46+0300",
     comments = "version: 1.4.1.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-7.4.jar, environment: Java 17.0.9 (GraalVM Community)"
 )
 public class CatConverterImpl implements CatConverter {
@@ -21,6 +22,12 @@ public class CatConverterImpl implements CatConverter {
 
         CatDto catDto = new CatDto();
 
+        catDto.setId( source.getId() );
+        catDto.setName( source.getName() );
+        catDto.setBreed( source.getBreed() );
+        catDto.setColor( source.getColor() );
+        catDto.setAge( source.getAge() );
+
         return catDto;
     }
 
@@ -30,9 +37,14 @@ public class CatConverterImpl implements CatConverter {
             return null;
         }
 
-        Cat cat = new Cat();
+        CatBuilder cat = Cat.builder();
 
-        return cat;
+        cat.name( source.getName() );
+        cat.breed( source.getBreed() );
+        cat.color( source.getColor() );
+        cat.age( source.getAge() );
+
+        return cat.build();
     }
 
     @Override
@@ -41,9 +53,15 @@ public class CatConverterImpl implements CatConverter {
             return null;
         }
 
-        Cat cat = new Cat();
+        CatBuilder cat = Cat.builder();
 
-        return cat;
+        cat.id( source.getId() );
+        cat.name( source.getName() );
+        cat.breed( source.getBreed() );
+        cat.color( source.getColor() );
+        cat.age( source.getAge() );
+
+        return cat.build();
     }
 
     @Override
@@ -51,6 +69,12 @@ public class CatConverterImpl implements CatConverter {
         if ( dto == null ) {
             return null;
         }
+
+        cat.setId( dto.getId() );
+        cat.setName( dto.getName() );
+        cat.setBreed( dto.getBreed() );
+        cat.setColor( dto.getColor() );
+        cat.setAge( dto.getAge() );
 
         return cat;
     }
